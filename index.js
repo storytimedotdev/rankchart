@@ -68,12 +68,12 @@ function map2Intervals(mdl, intervals) {
 }
 
 async function upload2S3() {
-  const yesterday = new Date();
-  yesterday.setHours(yesterday.getHours() - 24);
+  const past = new Date();
+  past.setHours(past.getHours() - 6);
 
   const articleModels = await ArticleModel.find(
     {
-      lastUpdated: { $gt: yesterday }
+      lastUpdated: { $gt: past }
     },
     null,
     { sort: { lastUpdated: -1 } }
@@ -81,7 +81,7 @@ async function upload2S3() {
 
   const tsSet = new Set();
   articleModels.forEach(mdl =>
-    mdl.updated.forEach(ts => tsSet.add(ts.getTime()))
+    mdl.updated.forEach(ts => ts > past && tsSet.add(ts.getTime()))
   );
   const intervals = Array.from(tsSet).sort();
   const datasets = articleModels.map(mdl => {
