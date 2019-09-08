@@ -81,7 +81,8 @@ function convert2chartData(data) {
       responsive: true,
       layout: {
         padding: {
-          top: 45
+          top: 45,
+          right: 0
         }
       },
       scales: {

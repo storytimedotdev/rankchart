@@ -1,7 +1,7 @@
 {
   "name": "Rank chart",
   "version": "1.0",
-  "description": "Hacker new rank chart chrome extension",
+  "description": "Extension to show how fast stories bubble up at Hacker News (https://news.ycombinator.com)",
   "manifest_version": 2,
   "permissions": ["https://rankchart.s3.us-east-2.amazonaws.com/"],
   "page_action": {
