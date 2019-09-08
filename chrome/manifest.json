@@ -1,0 +1,31 @@
+{
+  "name": "Rank chart",
+  "version": "1.0",
+  "description": "Hacker new rank chart chrome extension",
+  "manifest_version": 2,
+  "permissions": ["https://rankchart.s3.us-east-2.amazonaws.com/"],
+  "page_action": {
+    "default_icon": "icons/icon32.png",
+    "default_title": "Rank chart"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://news.ycombinator.com/",
+        "https://news.ycombinator.com/news"
+      ],
+      "css": ["thirdparty/chart/chart.min.css", "src/content_scripts/index.css"]
+    },
+    {
+      "matches": [
+        "https://news.ycombinator.com/",
+        "https://news.ycombinator.com/news"
+      ],
+      "js": ["thirdparty/chart/chart.min.js", "src/content_scripts/index.js"]
+    }
+  ],
+  "background": {
+    "scripts": ["src/background/index.js"],
+    "persistent": false
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "isomorphic-unfetch": "^3.0.0",
+    "mongoose": "^5.6.13"
+  },
+  "name": "rankchart",
+  "version": "1.0.0",
+  "description": "Rankchart extension source code.",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "zip": "zip -r lambda.zip . -x \".env\" -x \"yarn.lock\" -x \"*chrome*\""
+  }
+}

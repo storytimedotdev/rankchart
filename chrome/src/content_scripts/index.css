@@ -1,0 +1,13 @@
+/**
+ * CSS here.
+ **/
+
+body > center {
+  display: flex;
+  justify-content: center;
+}
+
+.chart {
+  width: 600px;
+  height: 1125px;
+}
