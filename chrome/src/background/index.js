@@ -25,39 +25,11 @@ const stortByUpdated = lastIdx => (a, b) => {
   return 0;
 };
 
-const palette = [
-  "#4477AA",
-  "#66CCEE",
-  "#228833",
-  "#CCBB44",
-  "#EE6677",
-  "#AA3377",
-  "#BBBBBB",
-  "#DDAA33",
-  "#BB5566",
-  "#004488",
-  "#000000",
-  "#EE7733",
-  "#EE3377",
-  "#FFAABB",
-  "#800000",
-  "#AAAA00",
-  "#808000",
-  "#99DDFF",
-  "#000080",
-  "#808080",
-  "#77AADD",
-  "#44AA99"
-];
-
-const getColor = idx => palette[idx % palette.length];
-
 const formatDataSets = (ds, idx) =>
   Object.assign(
     {
       fill: false,
       borderWidth: 2,
-      borderColor: getColor(idx),
       pointRadius: 0,
       pointHitRadius: 5
     },

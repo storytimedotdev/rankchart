@@ -24,6 +24,7 @@
       "js": ["thirdparty/chart/chart.min.js", "src/content_scripts/index.js"]
     }
   ],
+  "web_accessible_resources": ["images/*.png"],
   "background": {
     "scripts": ["src/background/index.js"],
     "persistent": false

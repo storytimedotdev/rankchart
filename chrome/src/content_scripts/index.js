@@ -1,5 +1,7 @@
 const canvasId = "rankchart-canvas";
 
+let chartObj;
+
 function renderChart(data) {
   let cvs = document.getElementById(canvasId);
   if (!cvs) {
@@ -7,15 +9,65 @@ function renderChart(data) {
     cvs.id = canvasId;
     cvs.classList.add("chart");
 
+    const cvsWrapper = document.createElement("div");
+    cvsWrapper.classList.add("chart");
+    cvsWrapper.appendChild(cvs);
+
     const wrapper = document.createElement("div");
-    wrapper.classList.add("chart");
-    wrapper.appendChild(cvs);
+    wrapper.appendChild(cvsWrapper);
+
+    const imgEl = document.createElement("img");
+
+    const aTag = document.createElement("a");
+    aTag.setAttribute("href", "https://storytime.dev?ref=rank_chart");
+    aTag.setAttribute("target", "_blank");
+    aTag.appendChild(imgEl);
+
+    const promo = document
+      .createElement("i")
+      .appendChild(document.createTextNode("From the makers of"));
+    const promoWrapper = document.createElement("div");
+    promoWrapper.appendChild(promo);
+
+    wrapper.appendChild(promoWrapper);
+    wrapper.appendChild(aTag);
 
     document.body.firstElementChild.prepend(wrapper);
+    imgEl.src = chrome.extension.getURL("images/storytime.png");
   }
   const ctx = cvs.getContext("2d");
 
-  new Chart(ctx, data);
+  chartObj = new Chart(ctx, data);
+}
+
+function highlight(label, hilight) {
+  console.log(label, hilight);
+  if (!chartObj) {
+    return;
+  }
+  const dataset = chartObj.data.datasets.forEach(ds => {
+    if (ds.label === label) {
+      ds.borderColor = "#ff6600";
+    } else {
+      ds.borderColor = "#dae1e7";
+    }
+  });
+  chartObj.update();
+}
+
+function handleMouseEvent(ev) {
+  const el = ev.target;
+  if (el.tagName === "TD" && el.classList.contains("title")) {
+    const row = el.closest(".athing");
+    if (row) {
+      highlight(row.id, ev.type === "mouseover");
+    }
+  }
+}
+
+function setupHoverEvents() {
+  document.removeEventListener("mouseover", handleMouseEvent);
+  document.addEventListener("mouseover", handleMouseEvent);
 }
 
 function appendCurrentRank(chartData) {
@@ -32,6 +84,7 @@ function appendCurrentRank(chartData) {
 function fetchData() {
   chrome.runtime.sendMessage({ action: "fetchData" }, res => {
     if (res.status === "success") {
+      setupHoverEvents();
       renderChart(appendCurrentRank(res.data));
     }
   });
